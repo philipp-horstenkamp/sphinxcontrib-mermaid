@@ -8,6 +8,10 @@ import elkLayouts from "{{ mermaid_elk_js_url }}"
 import zenumlLayouts from "{{ mermaid_zenuml_js_url }}"
 {% endif %}
 
+{% if mermaid_include_iconify %}
+const iconifyLoader = () => fetch("{{ mermaid_iconify_json_url }}").then((res) => res.json());
+{% endif %}
+
 const initStyles = () => {
     const defaultStyle = document.createElement('style');
     defaultStyle.textContent = `{{ common_css }}`;
@@ -266,6 +270,15 @@ mermaid.registerLayoutLoaders(elkLayouts);
 
 {% if mermaid_include_zenuml %}
 mermaid.registerExternalDiagrams([zenumlLayouts]);
+{% endif %}
+
+{% if mermaid_include_iconify %}
+mermaid.registerIconPacks([
+    {
+        name: '{{ mermaid_iconify_pack }}',
+        loader: iconifyLoader,
+    }
+]);
 {% endif %}
 
 console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");

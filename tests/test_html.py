@@ -1,5 +1,3 @@
-import re
-
 import pytest
 
 
@@ -115,6 +113,28 @@ def test_mermaid_with_elk(app, index):
         'import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk/dist/mermaid-layout-elk.esm.min.mjs"'
         in index
     )
+
+
+@pytest.mark.sphinx("html", testroot="basic", confoverrides={"mermaid_include_iconify": True})
+def test_mermaid_with_iconify(app, index):
+    assert "mermaid.run()" in index
+    assert "mermaid.registerIconPacks" in index
+    assert (
+        'fetch("https://cdn.jsdelivr.net/npm/@iconify-json/logos@1/icons.json").then((res) => res.json())'
+        in index
+    )
+    assert "name: 'logos'" in index
+
+
+@pytest.mark.sphinx(
+    "html",
+    testroot="basic",
+    confoverrides={"mermaid_include_iconify": True, "mermaid_iconify_use_local": "test-icon-pack.json"},
+)
+def test_mermaid_with_iconify_local(index):
+    assert "mermaid.run()" in index
+    assert "@iconify-json" not in index
+    assert 'fetch("test-icon-pack.json").then((res) => res.json())' in index
 
 
 @pytest.mark.sphinx("html", testroot="markdown", confoverrides={"mermaid_include_elk": True})
