@@ -237,10 +237,20 @@ to False.
 Whether to download and load the ZenuML JavaScript extensions.
 Defaults to False.
 
+### `mermaid_include_iconify`
+
+Whether to download and register Iconify icon packs for Mermaid
+diagrams. Defaults to False.
+
 ### `mermaid_elk_version`
 
 The version of mermaid ELK renderer that will be used. The default is
 `"0.2.0"`.
+
+### `mermaid_iconify_version`
+
+The Iconify JSON package version to load when Iconify support is
+enabled. The default is `"1"`.
 
 ### `mermaid_zenuml_version`
 
@@ -253,10 +263,49 @@ Optional path to a local installation of
 `mermaid-layout-elk.esm.min.mjs`. By default, we will pull from
 jsdelivr.
 
+### `mermaid_iconify_use_local`
+
+Optional path to a local Iconify icon pack JSON file. By default, we
+will pull from jsdelivr.
+
 ### `mermaid_zenuml_use_local`
 
 Optional path to a local installation of `mermaid-zenuml.esm.min.mjs`.
 By default, we will pull from jsdelivr.
+
+### `mermaid_iconify_iconset`
+
+Name of the Iconify iconset to load. The default is `"logos"`.
+
+### `mermaid_iconify_pack`
+
+Name to register the icon pack under when calling
+`mermaid.registerIconPacks`. Defaults to `"logos"`.
+
+#### Using Iconify icons
+
+Enable Iconify by setting `mermaid_include_iconify = True`, optionally
+choosing a specific `mermaid_iconify_version` or a local
+`mermaid_iconify_use_local` JSON file. The extension will fetch the
+configured `mermaid_iconify_iconset`, register it under
+`mermaid_iconify_pack`, and you can then reference those icons in your
+Mermaid diagrams. For example, to reuse the same cloud icon for GCP,
+Azure, and AWS nodes:
+
+```python
+mermaid_include_iconify = True
+mermaid_iconify_iconset = "mdi"
+mermaid_iconify_pack = "clouds"
+```
+
+```mermaid
+flowchart LR
+  GCP["GCP"]:::cloud
+  Azure["Azure"]:::cloud
+  AWS["AWS"]:::cloud
+
+  classDef cloud icon: "clouds:cloud" iconWidth: 56 iconHeight: 56;
+```
 
 ### `d3_use_local`
 
