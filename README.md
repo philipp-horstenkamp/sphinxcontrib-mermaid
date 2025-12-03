@@ -282,6 +282,31 @@ Name of the Iconify iconset to load. The default is `"logos"`.
 Name to register the icon pack under when calling
 `mermaid.registerIconPacks`. Defaults to `"logos"`.
 
+#### Using Iconify icons
+
+Enable Iconify by setting `mermaid_include_iconify = True`, optionally
+choosing a specific `mermaid_iconify_version` or a local
+`mermaid_iconify_use_local` JSON file. The extension will fetch the
+configured `mermaid_iconify_iconset`, register it under
+`mermaid_iconify_pack`, and you can then reference those icons in your
+Mermaid diagrams. For example, to reuse the same cloud icon for GCP,
+Azure, and AWS nodes:
+
+```python
+mermaid_include_iconify = True
+mermaid_iconify_iconset = "mdi"
+mermaid_iconify_pack = "clouds"
+```
+
+```mermaid
+flowchart LR
+  GCP["GCP"]:::cloud
+  Azure["Azure"]:::cloud
+  AWS["AWS"]:::cloud
+
+  classDef cloud icon: "clouds:cloud" iconWidth: 56 iconHeight: 56;
+```
+
 ### `d3_use_local`
 
 Optional path to a local installation of `d3.min.js`. By default, we
