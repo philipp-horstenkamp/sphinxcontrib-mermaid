@@ -429,6 +429,20 @@ def install_js(
                 f"https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@{app.config.mermaid_elk_version}/dist/mermaid-layout-elk.esm.min.mjs"
             )
 
+    _mermaid_iconify_js_url = None
+    if app.config.mermaid_include_icons:
+        if app.config.mermaid_iconify_use_local:
+            _mermaid_iconify_js_url = app.config.mermaid_iconify_use_local
+        elif app.config.mermaid_iconify_version == "latest":
+            _mermaid_iconify_js_url = (
+                f"https://cdn.jsdelivr.net/npm/@iconify-json/{app.config.mermaid_iconify_pack}/icons.json"
+            )
+        elif app.config.mermaid_iconify_version:
+            _mermaid_iconify_js_url = (
+                f"https://cdn.jsdelivr.net/npm/@iconify-json/{app.config.mermaid_iconify_pack}"
+                f"@{app.config.mermaid_iconify_version}/icons.json"
+            )
+
     _mermaid_zenuml_js_url = None
     if app.config.mermaid_include_zenuml:
         if app.config.mermaid_zenuml_use_local:
@@ -456,8 +470,11 @@ def install_js(
         mermaid_js_url=_mermaid_js_url,
         mermaid_init_config=dumps(app.config.mermaid_init_config),
         mermaid_include_elk=_mermaid_elk_js_url is not None,
+        mermaid_include_icons=_mermaid_iconify_js_url is not None,
         mermaid_include_zenuml=_mermaid_zenuml_js_url is not None,
         mermaid_elk_js_url=_mermaid_elk_js_url,
+        mermaid_iconify_js_url=_mermaid_iconify_js_url,
+        mermaid_iconify_pack=app.config.mermaid_iconify_pack,
         mermaid_zenuml_js_url=_mermaid_zenuml_js_url,
         common_css=template_css.render(
             mermaid_width=_mermaid_width,
@@ -599,10 +616,14 @@ def setup(app):
     # Plugins
     app.add_config_value("mermaid_include_elk", False, "html")
     app.add_config_value("mermaid_include_zenuml", False, "html")
+    app.add_config_value("mermaid_include_icons", False, "html")
     app.add_config_value("mermaid_elk_version", "0.2.0", "html")
     app.add_config_value("mermaid_zenuml_version", "0.2.2", "html")
+    app.add_config_value("mermaid_iconify_version", "1", "html")
     app.add_config_value("mermaid_elk_use_local", "", "html")
     app.add_config_value("mermaid_zenuml_use_local", "", "html")
+    app.add_config_value("mermaid_iconify_use_local", "", "html")
+    app.add_config_value("mermaid_iconify_pack", "logos", "html")
 
     app.add_config_value("d3_use_local", "", "html")
     app.add_config_value("d3_version", "7.9.0", "html")

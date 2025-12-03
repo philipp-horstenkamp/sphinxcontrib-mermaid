@@ -237,10 +237,20 @@ to False.
 Whether to download and load the ZenuML JavaScript extensions.
 Defaults to False.
 
+### `mermaid_include_icons`
+
+Whether to download and load an Iconify icon pack for Mermaid diagrams.
+Defaults to False.
+
 ### `mermaid_elk_version`
 
 The version of mermaid ELK renderer that will be used. The default is
 `"0.2.0"`.
+
+### `mermaid_iconify_version`
+
+The version of the Iconify JSON pack that will be used. The default is
+`"1"`.
 
 ### `mermaid_zenuml_version`
 
@@ -253,10 +263,19 @@ Optional path to a local installation of
 `mermaid-layout-elk.esm.min.mjs`. By default, we will pull from
 jsdelivr.
 
+### `mermaid_iconify_use_local`
+
+Optional path to a local Iconify `icons.json` pack. By default, we will
+pull from jsdelivr.
+
 ### `mermaid_zenuml_use_local`
 
 Optional path to a local installation of `mermaid-zenuml.esm.min.mjs`.
 By default, we will pull from jsdelivr.
+
+### `mermaid_iconify_pack`
+
+The Iconify pack name to register in Mermaid. Defaults to `"logos"`.
 
 ### `d3_use_local`
 
