@@ -8,6 +8,25 @@ import elkLayouts from "{{ mermaid_elk_js_url }}"
 import zenumlLayouts from "{{ mermaid_zenuml_js_url }}"
 {% endif %}
 
+{% if mermaid_include_icons %}
+const registerIconify = async () => {
+    const iconifyLoader = async () => {
+        const response = await fetch("{{ mermaid_iconify_js_url }}");
+        if (!response.ok) {
+            throw new Error(`Failed to load Iconify pack from {{ mermaid_iconify_js_url }}`);
+        }
+        return response.json();
+    };
+
+    await mermaid.registerIconPacks([
+        {
+            name: "{{ mermaid_iconify_pack }}",
+            loader: iconifyLoader,
+        },
+    ]);
+};
+{% endif %}
+
 const initStyles = () => {
     const defaultStyle = document.createElement('style');
     defaultStyle.textContent = `{{ common_css }}`;
@@ -229,6 +248,10 @@ const runMermaid = async (rerun) => {
 
 const load = async () => {
     initStyles();
+
+    {% if mermaid_include_icons %}
+    await registerIconify();
+    {% endif %}
 
     await runMermaid(true);
 

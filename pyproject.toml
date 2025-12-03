@@ -49,6 +49,8 @@ test = [
     "myst-parser",
     "pytest",
     "ruff",
+    "types-docutils",
+    "types-PyYAML",
     "sphinx"
 ]
 
@@ -78,6 +80,10 @@ section-order = [
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
+
+[tool.mypy]
+files = ["sphinxcontrib"]
+ignore_missing_imports = true
 
 [tool.setuptools.packages.find]
 where = ["./"]
